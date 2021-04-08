@@ -1,8 +1,9 @@
 import { Text } from "@chakra-ui/react";
 import { Container, Flex, Link } from "@chakra-ui/layout";
-import { Link as ReachLink } from "react-router-dom";
+import { NavLink as ReachLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
   return (
     <Container maxW="container.xl">
       <Flex justify="space-between" paddingY="2">
@@ -24,11 +25,11 @@ const Navbar = () => {
           <Link
             as={ReachLink}
             to="/"
-            color="teal.500"
+            color={location.pathname === "/" ? "gray.500" : "teal.500"}
             marginLeft="4"
             _hover={{
               textDecoration: "none",
-              color: "teal.700",
+              color: "gray.500",
             }}
             _focus={{
               outline: "none",
@@ -39,11 +40,11 @@ const Navbar = () => {
           <Link
             as={ReachLink}
             to="/friends"
-            color="teal.500"
+            color={location.pathname === "/friends" ? "gray.500" : "teal.500"}
             marginLeft="4"
             _hover={{
               textDecoration: "none",
-              color: "teal.700",
+              color: "gray.500",
             }}
             _focus={{
               outline: "none",
@@ -54,11 +55,11 @@ const Navbar = () => {
           <Link
             as={ReachLink}
             to="/photos"
-            color="teal.500"
+            color={location.pathname === "/photos" ? "gray.500" : "teal.500"}
             marginLeft="4"
             _hover={{
               textDecoration: "none",
-              color: "teal.700",
+              color: "gray.500",
             }}
             _focus={{
               outline: "none",
