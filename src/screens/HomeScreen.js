@@ -25,12 +25,14 @@ const HomeScreen = () => {
         const { data: posts } = await axios.get(
           "https://jsonplaceholder.typicode.com/posts"
         );
-        const { data: users } = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
+        const {
+          data: { results: users },
+        } = await axios.get(
+          `https://randomuser.me/api/?results=${posts.length + 1}`
         );
         const modifiedPosts = posts.map((post) => ({
           id: post.id,
-          username: users.find((user) => user.id === post.userId).name,
+          user: users[post.id],
           title: post.title,
           body: post.body,
         }));
@@ -50,7 +52,7 @@ const HomeScreen = () => {
         letterSpacing="tight"
         marginBottom="4"
       >
-        Activities among your friends
+        Posts by your friends
       </Text>
       {error ? (
         <Flex justify="center" minHeight="xl" alignItems="center">
@@ -74,7 +76,7 @@ const HomeScreen = () => {
               <PostCardContent
                 title={post.title}
                 body={post.body}
-                author={post.username}
+                user={post.user}
               />
             </Card>
           ))}
