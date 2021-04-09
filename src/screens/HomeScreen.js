@@ -25,7 +25,16 @@ const HomeScreen = () => {
         const { data: posts } = await axios.get(
           "https://jsonplaceholder.typicode.com/posts"
         );
-        setPosts(posts);
+        const { data: users } = await axios.get(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        const modifiedPosts = posts.map((post) => ({
+          id: post.id,
+          username: users.find((user) => user.id === post.userId).name,
+          title: post.title,
+          body: post.body,
+        }));
+        setPosts(modifiedPosts);
         setLoading(false);
       } catch (err) {
         setError(true);
@@ -62,7 +71,11 @@ const HomeScreen = () => {
         <ContentContainer>
           {posts.map((post) => (
             <Card key={post.id}>
-              <PostCardContent title={post.title} body={post.body} />
+              <PostCardContent
+                title={post.title}
+                body={post.body}
+                author={post.username}
+              />
             </Card>
           ))}
         </ContentContainer>
