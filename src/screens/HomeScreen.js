@@ -1,16 +1,11 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-} from "@chakra-ui/alert";
-import { Flex, Text } from "@chakra-ui/layout";
-import { Spinner } from "@chakra-ui/spinner";
+import { Text } from "@chakra-ui/layout";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import Card from "../components/Card";
 import ContentContainer from "../components/ContentContainer";
+import ErrorMessage from "../components/ErrorMessage";
+import Loader from "../components/Loader";
 import PostCardContent from "../components/PostCardContent";
 
 const HomeScreen = () => {
@@ -55,20 +50,12 @@ const HomeScreen = () => {
         Posts by your friends
       </Text>
       {error ? (
-        <Flex justify="center" minHeight="xl" alignItems="center">
-          <Alert status="error" maxWidth="max-content" padding="8">
-            <AlertIcon />
-            <AlertTitle mr={2}>Error fetching data!!!</AlertTitle>
-            <AlertDescription>
-              Please make sure you are connected to the internet or try again
-              later.
-            </AlertDescription>
-          </Alert>
-        </Flex>
+        <ErrorMessage
+          text="Please make sure you are connected to the internet or try again
+        later."
+        />
       ) : loading ? (
-        <Flex justify="center" minHeight="xl" alignItems="center">
-          <Spinner color="teal.500" size="xl" />
-        </Flex>
+        <Loader />
       ) : (
         <ContentContainer>
           {posts.map((post) => (
